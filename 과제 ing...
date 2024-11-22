@@ -1,0 +1,55 @@
+import controlP5.*;
+import processing.sound.*;
+
+SoundFile soundFile;
+ControlP5 cp5;
+
+int bgColor = color(182, 65, 215);
+
+PImage widgetMusic;
+PImage[] playImg = new PImage[3];
+PImage[] pauseImg = new PImage[3];
+
+Boolean isPlay = false;
+
+void setup(){
+  size(360, 800);
+  background(bgColor);
+  
+  widgetMusic = loadImage("widget_music.png");
+  
+  cp5 = new ControlP5(this);
+  
+  for (int i = 0; i<3;i++){
+    playImg[i] = loadImage("play_circle.png");
+    pauseImg[i] = loadImage("pause_circle.png");
+  }
+  
+  cp5.addButton("playBtn")
+     .setPosition(70,70)
+     .setImages(playImg)
+     .updateSize();
+     
+  soundFile = new SoundFile(this, "PerfectNight.mp3");
+  
+}
+
+void draw(){
+  image(widgetMusic, 15, 15);
+  
+}
+
+public void playBtn(){
+  print("btn clicked");
+  
+  if(isPlay){
+    soundFile.pause();
+    cp5.getController("playBtn").setImages(playImg);
+  } else{
+    soundFile.play();
+    cp5.getController("playBtn").setImages(pauseImg);
+    
+  }
+  
+  isPlay = !isPlay;
+}
